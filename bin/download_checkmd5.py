@@ -10,7 +10,7 @@ class AppURLopener(urllib.FancyURLopener):
         raise Exception()
 urllib._urlopener = AppURLopener()
 
-def file_md5(file):
+def file_md5(dest):
     m = hashlib.md5()
     m.update(open(dest).read())
     return m.hexdigest()
@@ -30,7 +30,7 @@ def main():
     
     fresh = False
     if not os.path.exists(dest):
-        print "Downloading from %s to %s..."%(uri, dest),
+        print("Downloading from %s to %s..."%(uri, dest),)
         sys.stdout.flush()
         urllib.urlretrieve(uri, dest)
         print "done"
@@ -39,7 +39,7 @@ def main():
     if md5sum:
         print "Computing md5sum on downloaded file",
         sys.stdout.flush()
-        checksum = md5_file(dest)
+        checksum = file_md5(dest)
         print "done"
         
         if checksum!=md5sum:
@@ -52,7 +52,7 @@ def main():
     
                 print "Computing md5sum on downloaded file",
                 sys.stdout.flush()
-                checksum = md5_file(dest)
+                checksum = file_md5(dest)
                 print "done"
                 
                 if checksum!=md5sum:
